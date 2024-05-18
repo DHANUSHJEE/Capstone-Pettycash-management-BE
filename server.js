@@ -7,7 +7,7 @@ import { connectDB } from "./config/connectDb.js";
 import userRoute from "./routes/userRoute.js";
 import transactionRoute from "./routes/transactionRoute.js";
 import cookieParser from "cookie-parser";
-import router from "../cash management/routes/passwordReset.js";
+import passwordResetRoute from "./routes/passwordReset.js";
 
 // dotenv config
 dotenv.config();
@@ -31,7 +31,7 @@ app.use("/api/user", userRoute);
 app.use("/api/transaction", transactionRoute);
 
 // password reset routes
-app.use("/api/password-reset", router);
+app.use("/api/password-reset", passwordResetRoute);
 
 
 // listen server 
