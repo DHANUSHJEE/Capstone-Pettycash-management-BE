@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import colors from "colors";
 import { connectDB } from "./config/connectDb.js";
 import userRoute from "./routes/userRoute.js";
 import transactionRoute from "./routes/transactionRoute.js";
@@ -13,7 +12,7 @@ import passwordResetRoute from "./routes/passwordReset.js";
 dotenv.config();
 
 // port
-const port = process.env.PORT || 5000; // default port in case environment variable is not set
+const port = process.env.PORT  
 
 // rest of the code
 const app = express();
@@ -22,7 +21,25 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cookieParser());
+ app.use(cookieParser());
+
+// const allowedOrigins = ['http://localhost:3001' || 'https://main--enchanting-piroshki-6c4c3f.netlify.app/']; app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin) return callback(null, true); // Allow requests with no origin (like mobile apps or curl requests)
+//     }
+//         if(allowedOrigins.indexOf(origin) === -1) {
+//     const msg = 'The CORS policy for this site does not allow access from the specified origin.'; return callback(new Error(msg)
+//         }, true)
+
+const allowedOrigins = [
+    "http://localhost:3001" || "https://main--enchanting-piroshki-6c4c3f.netlify.app/"]
+app.use(cors({orgin:function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+        const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+        return callback(new Error(msg), false);
+    }
+}}));
 
 // user routes
 app.use("/api/user", userRoute);

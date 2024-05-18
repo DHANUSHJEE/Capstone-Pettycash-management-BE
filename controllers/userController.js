@@ -70,10 +70,6 @@ export const registerController = async (req, res) => {
 
         const newToken = await new TokenSchema({ userId: user._id, token: crypto.randomBytes(32).toString('hex') }).save();
         
-
-
-       
-
         const url = `${process.env.BASE_URL}user/${user._id}/verify/${newToken.token}`;
 
         await sendActivationEmail(user.email, url);
