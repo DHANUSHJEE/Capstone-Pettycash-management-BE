@@ -55,11 +55,7 @@ import path from "path";
 // dotenv config
 dotenv.config();
 
-// Ensure PORT is defined in .env
-if (!process.env.PORT) {
-    console.error("PORT is not defined in the .env file");
-    process.exit(1);
-}
+
 
 // port
 const port = process.env.PORT ; 
@@ -73,30 +69,17 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-// Serve static files with correct MIME types
-app.use('/static', express.static(path.join(__dirname, 'public'), {
-    setHeaders: function (res, path) {
-        if (path.endsWith('.js')) {
-            res.setHeader('Content-Type', 'application/javascript');
-        }
-    }
-}));
+
 
 // API routes
 app.use("/api/user", userRoute);
 app.use("/api/transaction", transactionRoute);
 app.use("/api/password-reset", passwordResetRoute);
 
-// Serve main HTML file
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
-// Error handling middleware (optional, but recommended)
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
+
+
+
 
 // Listen server 
 app.listen(port, () => {
