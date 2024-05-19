@@ -87,6 +87,11 @@ app.use("/api/user", userRoute);
 app.use("/api/transaction", transactionRoute);
 app.use("/api/password-reset", passwordResetRoute);
 
+// Serve main HTML file
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Error handling middleware (optional, but recommended)
 app.use((err, req, res, next) => {
     console.error(err.stack);
