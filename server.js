@@ -31,15 +31,13 @@ app.use(morgan("dev"));
 //     const msg = 'The CORS policy for this site does not allow access from the specified origin.'; return callback(new Error(msg)
 //         }, true)
 
-const allowedOrigins = [
-    "http://localhost:3001" || "https://main--enchanting-piroshki-6c4c3f.netlify.app/"]
-app.use(cors({orgin:function(origin, callback){
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){
-        const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-        return callback(new Error(msg), false);
+app.use(express.static('public', {
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            res.setHeader('Content-Type', 'application/javascript');
+        }
     }
-}}));
+}));
 
 // user routes
 app.use("/api/user", userRoute);
