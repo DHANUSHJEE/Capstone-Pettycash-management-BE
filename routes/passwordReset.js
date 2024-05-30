@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/userModel.js";
 import bcrypt from 'bcrypt';
+import { sendPasswordResetEmail } from "../services/passwordService.js";
 
 
 const router = express.Router();
