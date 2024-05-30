@@ -55,7 +55,7 @@ router.post("/forgot-password", async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await User.updateOne({ _id: user._id }, { password: hashedPassword });
+        await User.updateOne( { password: hashedPassword });
        
 
         await sendPasswordResetEmail(user.email);
