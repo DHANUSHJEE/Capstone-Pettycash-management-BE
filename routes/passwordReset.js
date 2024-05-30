@@ -1,11 +1,6 @@
 import express from "express";
-import joi from "joi";
-import passwordComplexity from "joi-password-complexity";
 import User from "../models/userModel.js";
-import TokenSchema from "../Token/token.js";
 import bcrypt from 'bcrypt';
-import { sendPasswordResetEmail } from "../services/passwordService.js";
-import crypto from 'crypto';
 
 
 const router = express.Router();
@@ -61,6 +56,9 @@ router.post("/forgot-password", async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await User.updateOne({ _id: user._id }, { password: hashedPassword });
+       
+
+        await sendPasswordResetEmail(user.email);
         res.status(200).send({ message: 'Password reset successfully' });
 
     } catch (error) {

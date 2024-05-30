@@ -26,8 +26,8 @@ export const sendPasswordResetEmail = async (email, url) => {
             subject: 'Password Reset',
             html: `
                 <h5>Hi there,</h5>
-                <p>Your request to reset your password has been received.</p>
-                <p>Click here to reset your account password: <a href="${url}">Reset Password</a></p>
+                <p>Your password has been reset successfully.</p>
+                
                 <p>Enjoy your service in our platform.</p>`
         };
 
