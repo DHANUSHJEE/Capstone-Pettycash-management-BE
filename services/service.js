@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const sendActivationEmail = async (email, url) => {
+const sendActivationEmail = async (email) => {
     try {
         const transporter = nodemailer.createTransport({
             service: process.env.SERVICE,
@@ -28,7 +28,6 @@ const sendActivationEmail = async (email, url) => {
             html: `
                 <h5>Hi there,</h5>
                 <p>Your account has been created successfully in our platform.</p>
-                <p>Click here to verify your account: <a href="${url}">Activate Account</a></p>
                 <p>Enjoy your service in our platform.</p>
             `,
         };

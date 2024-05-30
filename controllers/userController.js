@@ -1,9 +1,7 @@
 import userModel from "../models/userModel.js"
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import TokenSchema from "../Token/token.js";
 import User from "../models/userModel.js";
-import crypto from 'crypto'; 
 import  sendActivationEmail  from "../services/service.js";
 import dotenv from 'dotenv';
 
@@ -26,16 +24,16 @@ export const loginController = async (req, res) => {
             return res.status(400).send({ message: 'Invalid password' });
         }
         //check email is valid
-        if (!user.verified) {
-            let Token = await TokenSchema.findOne({ userId: user._id });
-            if (!Token) {
-                Token = await new TokenSchema({ userId: user._id, token: crypto.randomBytes(32).toString('hex') }).save();
+        // if (!user.verified) {
+        //     let Token = await TokenSchema.findOne({ userId: user._id });
+        //     if (!Token) {
+        //         Token = await new TokenSchema({ userId: user._id, token: crypto.randomBytes(32).toString('hex') }).save();
 
-                const url = `${process.env.BASE_URL}user/${user._id}/verify/${Token.token}`;
-                await sendActivationEmail(user.email, "verify email",url);
-            }
-            return res.status(400).send({ message: ' An activation email has been sent to your email. Please verify your email' });
-        }
+        //         const url = `${process.env.BASE_URL}user/${user._id}/verify/${Token.token}`;
+        //         await sendActivationEmail(user.email, "verify email",url);
+        //     }
+        //     return res.status(400).send({ message: ' An activation email has been sent to your email. Please verify your email' });
+        // }
 
         //if the password is correct generate a token
         const token = jwt.sign({
@@ -68,40 +66,40 @@ export const registerController = async (req, res) => {
 
         const user = await new User({ name, email, password: hashedPassword, verified: false }).save();
 
-        const newToken = await new TokenSchema({ userId: user._id, token: crypto.randomBytes(32).toString('hex') }).save();
+        //const newToken = await new TokenSchema({ userId: user._id, token: crypto.randomBytes(32).toString('hex') }).save();
         
-        const url = `${process.env.BASE_URL}user/${user._id}/verify/${newToken.token}`;
+        //const url = `${process.env.BASE_URL}user/${user._id}/verify/${newToken.token}`;
 
-        await sendActivationEmail(user.email, url);
+        await sendActivationEmail(user.email);
 
-        res.status(201).json({ message: 'User registered successfully. Please check your email for verification.' });
+        res.status(201).json({ message: 'User registered successfully.Go to login' });
     } catch (error) {
         res.status(500).json({ message: 'Error occurred during registration' });
     }
 };
-export const verifyEmail = async (req, res) => {
-    const { id, token } = req.params;
+// export const verifyEmail = async (req, res) => {
+//     const { id, token } = req.params;
 
-    try {
-        const user = await User.findOne({ _id: id });
-        if (!user) {
-            return res.status(400).json({ message: 'Invalid verification link' });
-        }
+//     try {
+//         const user = await User.findOne({ _id: id });
+//         if (!user) {
+//             return res.status(400).json({ message: 'Invalid verification link' });
+//         }
 
-        const tokenData = await TokenSchema.findOne({ userId: user._id, token });
-        if (!tokenData) {
-            return res.status(400).json({ message: 'Invalid verification link' });
-        }
+//         const tokenData = await TokenSchema.findOne({ userId: user._id, token });
+//         if (!tokenData) {
+//             return res.status(400).json({ message: 'Invalid verification link' });
+//         }
 
-        await User.updateOne({ _id: user._id }, { verified: true });
+//         await User.updateOne({ _id: user._id }, { verified: true });
 
-        await TokenSchema.deleteOne({ _id: tokenData._id });
+//         await TokenSchema.deleteOne({ _id: tokenData._id });
 
-        res.status(200).json({ message: 'Email verified successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
-    }
-};
+//         res.status(200).json({ message: 'Email verified successfully' });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// };
 
 
 

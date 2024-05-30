@@ -1,5 +1,5 @@
 import express from "express";
-import { loginController, registerController, verifyEmail } from "../controllers/userController.js";
+import { loginController, registerController} from "../controllers/userController.js";
 
 
 
@@ -16,7 +16,7 @@ const router = express.Router();
 router.post("/register", registerController)
 
 //activation link
-router.get("/:id/verify/:token", verifyEmail)
+// router.get("/:id/verify/:token", verifyEmail)
 
 //POST && LOGIN
 router.post("/login", loginController)

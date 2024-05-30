@@ -50,7 +50,7 @@ import userRoute from "./routes/userRoute.js";
 import transactionRoute from "./routes/transactionRoute.js";
 import cookieParser from "cookie-parser";
 import passwordResetRoute from "./routes/passwordReset.js";
-import path from "path";
+
 
 // dotenv config
 dotenv.config();
