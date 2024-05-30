@@ -9,10 +9,9 @@ This is a cash management application built with Node.js and Express. The applic
 
 1. User Registration
 2. User Login
-3. Email Verification
-4. Password Reset
-5. Add, Edit, Delete Transactions
-6. View All Transactions
+3. Password Reset
+4. Add, Edit, Delete Transactions
+5. View All Transactions
 
 ## Installation
 
@@ -72,12 +71,6 @@ Verify email:
 
 http
 Copy code
-GET /api/user/:id/verify/:token
-Transaction Routes
-Add a transaction:
-
-http
-Copy code
 POST /api/transaction/add-transaction
 Get all transactions:
 
@@ -102,14 +95,7 @@ Copy code
 POST /api/password-reset/forgot-password
 Verify password reset link:
 
-http
-Copy code
-GET /api/password-reset/:id/:token
-Reset password:
 
-http
-Copy code
-POST /api/password-reset/:id/:token
 Middleware
 CORS: Enables cross-origin resource sharing.
 Express JSON: Parses incoming JSON requests.
@@ -128,8 +114,6 @@ Use the provided transaction routes to add, view, edit, or delete transactions.
 Password reset:
 
 Request a password reset link by sending a POST request to /api/password-reset/forgot-password with the user's email.
-Verify the password reset link sent to the user's email.
-Reset the password using the provided token.
 Running the Application
 Start the server:
 
