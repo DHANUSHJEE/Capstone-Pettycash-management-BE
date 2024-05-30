@@ -5,7 +5,7 @@ import mongoose from "mongoose";
     name: {type: String, required: [true, "name is required"]},
     email: {type: String, required: [true, "email is required"]},
     password: { type: String, required: [true, "password is required"] },
-    verified: { type: Boolean, default: false },
+    
     
   },
       { timestamps: true }
