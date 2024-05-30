@@ -48,14 +48,14 @@ const router = express.Router();
 
 router.post("/forgot-password", async (req, res) => {
     try {
-        const { password , confirmPassword } = req.body;
+        const {email, password , confirmPassword } = req.body;
         if (password !== confirmPassword) { 
             return res.status(400).send({ message: 'Passwords do not match' });
         }
 
-        const user = await User.findOne({ _id: req.body.userId });
-        if (!user) { 
-            return res.status(400).send({ message: 'User not found' });
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(409).send({ message: 'User with given email does not exist' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
